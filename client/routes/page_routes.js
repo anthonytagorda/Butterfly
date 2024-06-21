@@ -1,6 +1,10 @@
-// page_routes.js
+// routes/page_routes.js
 const express = require('express');
+const authController = require('../controller/auth');
 
 const router = express.Router();
 
-router.get(['/', '/user_login'], authController.isLoggedIn, authController.login);
+// Page Routes
+router.get(['/', '/client_login'], authController.isLoggedIn, authController.login);
+
+module.exports = router;
