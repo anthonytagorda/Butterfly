@@ -131,7 +131,7 @@ section .wave.wave4 {
 .form-box h4 {
     color: var(--primary-1);
     font-size: 40px;
-    font-family: 'Brush Script MT', cursive;
+    font-weight: bold;
 }
 
 .wrapper .form-box {
