@@ -6,49 +6,34 @@ function toggleBookmark(button) {
     }
 
     const moodOptions = document.querySelectorAll('.mood-option');
-let selectedMood = null;
-
-moodOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        moodOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedMood = option.getAttribute('data-mood');
+    let selectedMood = null;
+    
+    // Add click event listeners to each mood option
+    moodOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove 'selected' class from all options
+            moodOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add 'selected' class to the clicked option
+            option.classList.add('selected');
+            
+            // Get the data-mood attribute value of the clicked option
+            selectedMood = option.getAttribute('data-mood');
+        });
     });
-});
-
-document.querySelector('.submit-btn').addEventListener('click', () => {
-    if (selectedMood) {
-        // Hide the mood selection page and show the success page
-        document.getElementById('mood-selection').style.display = 'none';
-        document.getElementById('success-page').style.display = 'flex';
-
-        // Set the selected mood text and message
-        const moodText = selectedMood.charAt(0).toUpperCase() + selectedMood.slice(1);
-        document.getElementById('selected-mood-text').textContent = moodText;
-
-        // Set the content based on the selected mood
-        let successIcon = document.getElementById('success-icon');
-        let successMessage = document.getElementById('success-message');
-        if (selectedMood === 'joyful') {
-            successIcon.style.backgroundImage = "url('/mnt/data/image.png')"; // Replace with the correct path
-            successMessage.textContent = "You’re doing great! Follow your dreams and have a good day.";
-        } else if (selectedMood === 'sadness') {
-            successIcon.style.backgroundImage = "url('path_to_sad_image.png')";
-            successMessage.textContent = "It's okay to feel sad. Take care of yourself today.";
-        } else if (selectedMood === 'angry') {
-            successIcon.style.backgroundImage = "url('path_to_angry_image.png')";
-            successMessage.textContent = "Take a deep breath. It's important to stay calm.";
+    
+    // Add click event listener to the submit button
+    document.querySelector('.submit-btn').addEventListener('click', () => {
+        if (selectedMood) {
+            // Store the selected mood in localStorage
+            localStorage.setItem('selectedMood', selectedMood);
+    
+            // Redirect to the result page
+            window.location.href = 'result.html';
         } else {
-            successIcon.style.backgroundImage = "url('path_to_other_image.png')";
-            successMessage.textContent = "We're here for you. Take it one step at a time.";
+            // Alert the user if no mood is selected
+            alert('Please select a mood.');
         }
-    } else {
-        alert('Please select a mood.');
-    }
-});
-
-document.querySelector('.done-btn').addEventListener('click', () => {
-    location.reload(); // This will reset the page
-});
+    });
 
 }
