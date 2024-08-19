@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     <!-- Mood Selection Page -->
+     <div id="mood-selection" class="center-content">
+        <h1>How are <strong>you</strong> today?</h1>
+        <div class="mood-container">
+            <div class="mood-option" data-mood="joyful">
+                <div class="mood-icon" style="background-color: #FFEB3B; border-radius: 50%; width: 40px; height: 40px;"></div>
+                <p>Joyful</p>
+                <div class="mood-description">I feel satisfied and joyful.</div>
+            </div>
+            <div class="mood-option" data-mood="sadness">
+                <div class="mood-icon" style="background-color: #2196F3; border-radius: 50%; width: 40px; height: 40px;"></div>
+                <p>Sadness</p>
+                <div class="mood-description">There is heaviness in the chest.</div>
+            </div>
+            <div class="mood-option" data-mood="angry">
+                <div class="mood-icon" style="background-color: #FF5722; border-radius: 50%; width: 40px; height: 40px;"></div>
+                <p>Angry</p>
+                <div class="mood-description">I am stressed and tired.</div>
+            </div>
+            <div class="mood-option" data-mood="others">
+                <div class="mood-icon" style="background-color: #4CAF50; border-radius: 50%; width: 40px; height: 40px;"></div>
+                <p>Others</p>
+                <div class="mood-description">What are you feeling?</div>
+            </div>
+        </div>
+        <button class="submit-btn">Submit</button>
+    </div>
+
+    <!-- Success Page -->
+    <div id="success-page" class="center-content" style="display: none;">
+        <div class="success-icon" id="success-icon"></div>
+        <h2>You feel <strong id="selected-mood-text">Happy</strong></h2>
+        <p id="success-message">You’re doing great! Follow your dreams and have a good day.</p>
+        <button class="done-btn">DONE</button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

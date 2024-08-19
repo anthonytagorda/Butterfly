@@ -120,3 +120,107 @@ main h1 {
         width: 100%;
     }
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E0F7FA;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin-bottom: 40px;
+}
+
+.mood-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mood-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.mood-option:hover {
+    transform: scale(1.05);
+}
+
+.mood-option.selected {
+    border: 2px dashed #000;
+}
+
+.mood-option img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.mood-option p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.mood-description {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.submit-btn, .done-btn {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #00796B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover, .done-btn:hover {
+    background-color: #004D40;
+}
+
+/* Success Page Styles */
+#success-page {
+    text-align: center;
+}
+
+.success-icon {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+
+
+
+
