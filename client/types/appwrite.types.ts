@@ -6,7 +6,7 @@ export interface Client extends Models.Document {
   email: string;
   phone: string;
   birthDate: Date;
-  gender: Gender;
+  sex: Sex;
   address: string;
   occupation: string;
   emergencyContactName: string;

@@ -14,7 +14,7 @@ import { CustomFormField } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { FormFieldType } from "./ClientForm";
 import { RadioGroup } from "../ui/radio-group";
-import { GenderOptions } from "@/constants";
+import { SexOptions } from "@/constants";
 import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { Label } from "../ui/label";
 
@@ -103,7 +103,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           />
         </div>
 
-        {/* Date of Birth and Gender */}
+        {/* Date of Birth and Sex */}
         <div className="flex flex-col gap-6 xl:flex-row">
           <CustomFormField
             fieldType={FormFieldType.DATE_PICKER}
@@ -115,8 +115,8 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
-            name="gender"
-            label="Gender"
+            name="sex"
+            label="Sex"
             renderSkeleton={(field) => (
               <FormControl>
                 <RadioGroup
@@ -124,7 +124,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  {GenderOptions.map((option, i) => (
+                  {SexOptions.map((option, i) => (
                     <div key={option + i} className="radio-group">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="cursor-pointer">
