@@ -1,8 +1,19 @@
 "use server";
 
 import { ID, Query } from "node-appwrite";
-import { users } from "../appwrite.config";
+import {
+  BUCKET_ID,
+  DATABASE_ID,
+  ENDPOINT,
+  CLIENT_COLLECTION_ID,
+  PROJECT_ID,
+  databases,
+  storage,
+  users,
+} from "../appwrite.config";
 import { parseStringify } from "../utils";
+
+import { InputFile } from "node-appwrite/file";
 
 // Create User in Appwrite
 export const createUser = async (user: CreateUserParams) => {
@@ -39,5 +50,42 @@ export const getUser = async (userId: string) => {
       "An error occurred while retrieving the user details:",
       error
     );
+  }
+};
+
+// Register Client
+export const registerClient = async ({
+  identificationDocument,
+  ...client
+}: RegisterUserParams) => {
+  try {
+    let file;
+
+    if (identificationDocument) {
+      const inputFile = InputFile.fromBuffer(
+        identificationDocument?.get("blobFile") as Blob,
+        identificationDocument?.get("fileName") as string
+      );
+
+      file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
+    }
+
+    console.log({ sex: client.sex });
+
+    const newClient = await databases.createDocument(
+      DATABASE_ID!,
+      CLIENT_COLLECTION_ID!,
+      ID.unique(),
+      {
+        identificationDocumentId: file?.$id ? file.$id : null,
+        identificationDocumentUrl: file?.$id
+          ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view??project=${PROJECT_ID}`
+          : null,
+        ...client,
+      }
+    );
+    return parseStringify(newClient);
+  } catch (error) {
+    console.error("An error occurred while creating a new patient:", error);
   }
 };

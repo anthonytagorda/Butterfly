@@ -5,13 +5,16 @@ export interface Client extends Models.Document {
   name: string;
   email: string;
   phone: string;
+  lastName: string;
+  firstName: string;
+  middleName: string;
   birthDate: Date;
   sex: Sex;
   address: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
-  primaryPhysician: string;
+  primaryPsychotherapist: string;
   insuranceProvider: string;
   insurancePolicyNumber: string;
   allergies: string | undefined;
@@ -21,6 +24,8 @@ export interface Client extends Models.Document {
   identificationType: string | undefined;
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
+  treatmentConsent: boolean;
+  disclosureConsent: boolean;
   privacyConsent: boolean;
 }
 
@@ -28,7 +33,7 @@ export interface Appointment extends Models.Document {
   client: Client;
   schedule: Date;
   status: Status;
-  primaryPhysician: string;
+  primaryPsychotherapist: string;
   reason: string;
   note: string;
   userId: string;
