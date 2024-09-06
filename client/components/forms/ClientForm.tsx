@@ -31,7 +31,7 @@ const ClientForm = () => {
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      name: "",
+      firstName: "",
       email: "",
       phone: "",
     },
@@ -39,7 +39,7 @@ const ClientForm = () => {
 
   // Submit handler: Do something with the form values.
   async function onSubmit({
-    name,
+    firstName,
     email,
     phone,
   }: z.infer<typeof UserFormValidation>) {
@@ -47,7 +47,7 @@ const ClientForm = () => {
     setIsLoading(true);
 
     try {
-      const userData = { name, email, phone };
+      const userData = { firstName, email, phone };
 
       const user = await createUser(userData);
 
@@ -69,8 +69,8 @@ const ClientForm = () => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="name"
-          label="Full Name"
+          name="firstName"
+          label="What is your first name?"
           placeholder="Butterfly"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"

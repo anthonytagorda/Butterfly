@@ -20,12 +20,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
+import { ReactNode } from "react";
 
 interface CustomProps {
   control: Control<any>;
   fieldType: FormFieldType;
   name: string;
-  label?: string;
+  label?: ReactNode;
   placeholder?: string;
   iconSrc?: string;
   iconAlt?: string;
@@ -110,7 +111,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select 
+            onValueChange={field.onChange} 
+            defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={props.placeholder} />

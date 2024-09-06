@@ -1,6 +1,8 @@
 "use server";
 
 import { ID, Query } from "node-appwrite";
+import { InputFile } from "node-appwrite/file";
+
 import {
   BUCKET_ID,
   DATABASE_ID,
@@ -13,8 +15,6 @@ import {
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 
-import { InputFile } from "node-appwrite/file";
-
 // Create User in Appwrite
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -23,19 +23,21 @@ export const createUser = async (user: CreateUserParams) => {
       user.email,
       user.phone,
       undefined,
-      user.name
+      user.firstName
     );
     console.log({ newUser });
 
     return parseStringify(newUser);
   } catch (error: any) {
+    // Check existing user
     if (error && error?.code === 409) {
       const existingUser = await users.list([
         Query.equal("email", [user.email]),
       ]);
 
-      return existingUser?.users[0];
+      return existingUser.users[0];
     }
+    console.error("An error occurred while creating a new user:", error);
   }
 };
 
@@ -86,6 +88,24 @@ export const registerClient = async ({
     );
     return parseStringify(newClient);
   } catch (error) {
-    console.error("An error occurred while creating a new patient:", error);
+    console.error("An error occurred while creating a new client:", error);
+  }
+};
+
+// Get Client
+export const getClient = async (userId: string) => {
+  try {
+    const clients = await databases.listDocuments(
+      DATABASE_ID!,
+      CLIENT_COLLECTION_ID!,
+      [Query.equal("userId", userId)]
+    );
+
+    return parseStringify(clients.documents[0]);
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the user details:",
+      error
+    );
   }
 };
