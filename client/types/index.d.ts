@@ -9,7 +9,7 @@ declare type Sex = "Male" | "Female";
 declare type Status = "pending" | "scheduled" | "cancelled";
 
 declare interface CreateUserParams {
-  name: string;
+  firstName: string;
   email: string;
   phone: string;
 }
@@ -22,15 +22,15 @@ declare interface RegisterUserParams extends CreateUserParams {
   lastName: string;
   firstName: string;
   middleName: string;
+  suffixName: string;
   birthDate: Date;
   sex: Sex;
+  nationality: string;
+  civilStatus: string;
   address: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
-  primaryPsychotherapist: string;
-  insuranceProvider: string;
-  insurancePolicyNumber: string;
   allergies: string | undefined;
   currentMedication: string | undefined;
   familyMedicalHistory: string | undefined;

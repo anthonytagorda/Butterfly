@@ -6,37 +6,41 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import Image from "next/image";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { SelectItem } from "@/components/ui/select";
 import { Form, FormControl } from "@/components/ui/form";
 import { registerClient } from "@/lib/actions/client.actions";
 import { ClientFormValidation } from "@/lib/validation";
 
 import { CustomFormField } from "../CustomFormField";
-import SubmitButton from "../SubmitButton";
 import { FormFieldType } from "./ClientForm";
+import FileUploader from "../FileUploader";
+import SubmitButton from "../SubmitButton";
+
 import {
+  Psychotherapists,
+  SexOptions,
   IdentificationTypes,
   ClientFormDefaultValues,
-  SexOptions,
+  SuffixTypes,
+  Provinces,
+  Nationality,
+  CivilStatus,
 } from "@/constants";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "../ui/label";
-import { SelectItem } from "@/components/ui/select";
-import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Form handler: What the form will gather from the user?
   const form = useForm<z.infer<typeof ClientFormValidation>>({
     resolver: zodResolver(ClientFormValidation),
     defaultValues: {
       ...ClientFormDefaultValues,
-      lastName: "",
-      firstName: "",
-      middleName: "",
-      email: "",
-      phone: "",
+      firstName: user.firstName,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
@@ -48,7 +52,7 @@ const RegisterForm = ({ user }: { user: User }) => {
     let formData;
 
     if (
-      values.identificationDocument?.length &&
+      values.identificationDocument &&
       values.identificationDocument.length > 0
     ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
@@ -59,6 +63,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       formData.append("blobFile", blobFile);
       formData.append("fileName", values.identificationDocument[0].name);
     }
+
     try {
       const clientData = {
         ...values,
@@ -98,31 +103,58 @@ const RegisterForm = ({ user }: { user: User }) => {
         </section>
 
         {/* Full Name */}
-        <div className="flex flex-wrap gap-2 xl:flex-nowrap">
+        <div className="grid grid-cols-2 xl:grid-cols-2 gap-2">
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="lastName"
-            label="Last Name"
+            label={
+              <span>
+                Last Name (<i>Apeliyido</i>)
+              </span>
+            }
             placeholder="Last Name"
-            className="w-1/3 xl:w-1/2"
+            className="w-full xl:w-1/2"
           />
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="firstName"
-            label="First Name"
+            label={
+              <span>
+                First Name (<i>Pangalan</i>)
+              </span>
+            }
+            v
             placeholder="First Name"
-            className="w-1/3 xl:w-1/2"
+            className="w-full xl:w-1/2"
           />
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="middleName"
-            label="Middle Name"
+            label={
+              <span>
+                Middle Name (<i>Panggitnang apelyido</i>)
+              </span>
+            }
             placeholder="Middle Name"
-            className="w-1/6 xl:w-1/4"
+            className="w-full xl:w-1/4"
           />
+          <CustomFormField
+            fieldType={FormFieldType.SELECT}
+            control={form.control}
+            name="suffixName"
+            label="Suffix"
+            placeholder="Select Suffix"
+            className="w-full xl:w-1/8"
+          >
+            {SuffixTypes.map((type) => (
+              <SelectItem key={type} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </CustomFormField>
         </div>
 
         {/* Email and Phone */}
@@ -151,8 +183,12 @@ const RegisterForm = ({ user }: { user: User }) => {
             <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
               control={form.control}
-              name="birthdate"
-              label="Date of Birth"
+              name="birthDate"
+              label={
+                <span>
+                  Date of Birth (<i>Petsa ng kapanganakan</i>)
+                </span>
+              }
               className="w-full"
             />
           </div>
@@ -162,7 +198,11 @@ const RegisterForm = ({ user }: { user: User }) => {
               fieldType={FormFieldType.SKELETON}
               control={form.control}
               name="sex"
-              label="Sex"
+              label={
+                <span>
+                  Sex (<i>Kasarian</i>)
+                </span>
+              }
               renderSkeleton={(field) => (
                 <FormControl>
                   <RadioGroup
@@ -186,26 +226,60 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </div>
 
-        {/* Height */}
-        <div className="flex flex-col gap-6 xl:flex-row">
-          {/* <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="height"
-            label="Height"
-            placeholder="5' 10''"
-            iconSrc="/assets/icons/height.svg"
-            className="w-1/3 xl:w-1/2"
-          /> */}
+        {/* Civil Status and Nationality */}
+        <div className="flex gap-4 xl:flex-nowrap">
+          <div className="flex-1">
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="province"
+              label={
+                <span>
+                  Nationality (<i>Nasyonalidad</i>)
+                </span>
+              }
+              placeholder="Select Nationality"
+            >
+              {Nationality.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </CustomFormField>
+          </div>
+
+          <div className="flex-1">
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="province"
+              label={
+                <span>
+                  Civil Status (<i>Estado</i>)
+                </span>
+              }
+              placeholder="Select Civil Status"
+            >
+              {CivilStatus.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </CustomFormField>
+          </div>
         </div>
 
         {/* Address*/}
-        <div className="flex flex-col gap-6 xl:flex-row">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="address"
-            label="Home Address"
+            label={
+              <span>
+                Home Address (<i>Address ng Tahanan</i>)
+              </span>
+            }
             placeholder="Street Name, Building, House No."
           />
           <CustomFormField
@@ -219,16 +293,30 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="city"
-            label="City"
+            label={
+              <span>
+                City (<i>Siyudad</i>)
+              </span>
+            }
             placeholder="City"
           />
           <CustomFormField
-            fieldType={FormFieldType.INPUT}
+            fieldType={FormFieldType.SELECT}
             control={form.control}
             name="province"
-            label="Province"
-            placeholder="Province"
-          />
+            label={
+              <span>
+                Province (<i>Probinsiya</i>)
+              </span>
+            }
+            placeholder="Select Province"
+          >
+            {Provinces.map((type) => (
+              <SelectItem key={type} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </CustomFormField>
         </div>
 
         {/* Occupation */}
@@ -267,25 +355,8 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
-        {/* Insurance */}
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="insuranceProvider"
-            label="Insurance Provider"
-            placeholder="Philhealth"
-          />
-          <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="insurancePolicyNumber"
-            label="Insurance Policy Number"
-          />
-        </div>
-
         {/* Allergies and Medications */}
-        <div className="flex flex-col gap-6 xl:flex-row">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}

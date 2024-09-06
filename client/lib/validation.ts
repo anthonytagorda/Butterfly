@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const UserFormValidation = z.object({
-  name: z
+  firstName: z
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be at most 50 characters"),
@@ -14,22 +14,27 @@ export const UserFormValidation = z.object({
 export const ClientFormValidation = z.object({
   lastName: z
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters"),
+    .min(2, "Last name must be at least 2 characters")
+    .max(50, "Last name must be at most 50 characters"),
   firstName: z
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters"),
+    .min(2, "First name must be at least 2 characters")
+    .max(50, "First name must be at most 50 characters"),
   middleName: z
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(5, "Name must be at most 5 characters"),
+    .min(2, "Middle name must be at least 2 characters")
+    .max(5, "Middle name must be at most 5 characters"),
+  suffixName: z
+    .string()
+    .min(2, "Suffix name must be at least 2 characters")
+    .max(5, "Suffix name must be at most 5 characters"),
   email: z.string().email("Invalid email address"),
   phone: z
     .string()
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
   birthDate: z.coerce.date(),
-  sex: z.enum(["Male", "Female", "Other"]),
+  sex: z.enum(["Male", "Female"]),
+  nationality: z.string().min(2, "Select a Nationality"),
   address: z
     .string()
     .min(5, "Address must be at least 5 characters")
@@ -48,15 +53,6 @@ export const ClientFormValidation = z.object({
       (emergencyContactNumber) => /^\+\d{10,15}$/.test(emergencyContactNumber),
       "Invalid phone number"
     ),
-  primaryPsychotherapist: z.string().min(2, "Select at least one doctor"),
-  insuranceProvider: z
-    .string()
-    .min(2, "Insurance name must be at least 2 characters")
-    .max(50, "Insurance name must be at most 50 characters"),
-  insurancePolicyNumber: z
-    .string()
-    .min(2, "Policy number must be at least 2 characters")
-    .max(50, "Policy number must be at most 50 characters"),
   allergies: z.string().optional(),
   currentMedication: z.string().optional(),
   familyMedicalHistory: z.string().optional(),
@@ -85,7 +81,9 @@ export const ClientFormValidation = z.object({
 });
 
 export const CreateAppointmentSchema = z.object({
-  primaryPsychotherapist: z.string().min(2, "Select at least one doctor"),
+  primaryPsychotherapist: z
+    .string()
+    .min(2, "Select at least one psychotherapist"),
   schedule: z.coerce.date(),
   reason: z
     .string()
@@ -96,7 +94,9 @@ export const CreateAppointmentSchema = z.object({
 });
 
 export const ScheduleAppointmentSchema = z.object({
-  primaryPsychotherapist: z.string().min(2, "Select at least one doctor"),
+  primaryPsychotherapist: z
+    .string()
+    .min(2, "Select at least one psychotherapist"),
   schedule: z.coerce.date(),
   reason: z.string().optional(),
   note: z.string().optional(),
@@ -104,7 +104,9 @@ export const ScheduleAppointmentSchema = z.object({
 });
 
 export const CancelAppointmentSchema = z.object({
-  primaryPsychotherapist: z.string().min(2, "Select at least one doctor"),
+  primaryPsychotherapist: z
+    .string()
+    .min(2, "Select at least one psychotherapist"),
   schedule: z.coerce.date(),
   reason: z.string().optional(),
   note: z.string().optional(),

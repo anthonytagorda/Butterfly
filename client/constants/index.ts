@@ -1,20 +1,23 @@
-export const SexOptions = ["male", "female"];
+export const SexOptions = ["Male", "Female"];
 
 export const ClientFormDefaultValues = {
   firstName: "",
   lastName: "",
   middleName: "",
+  suffixName: "",
   email: "",
   phone: "",
   birthDate: new Date(Date.now()),
   sex: "Male" as Sex,
+  nationality: "",
+  civilStatus: "",
   address: "",
+  barangay: "",
+  city: "",
+  province: "",
   occupation: "",
   emergencyContactName: "",
   emergencyContactNumber: "",
-  primaryPsychotherapist: "",
-  insuranceProvider: "",
-  insurancePolicyNumber: "",
   allergies: "",
   currentMedication: "",
   familyMedicalHistory: "",
@@ -26,6 +29,13 @@ export const ClientFormDefaultValues = {
   disclosureConsent: false,
   privacyConsent: false,
 };
+
+export const Psychotherapists = [
+  {
+    image: "/assets/images/am-peralta.png",
+    name: "Angelica Peralta",
+  },
+];
 
 export const IdentificationTypes = [
   "Birth Certificate",
@@ -39,6 +49,20 @@ export const IdentificationTypes = [
   "State ID Card",
   "Student ID Card",
   "Voter ID Card",
+];
+
+export const SuffixTypes = ["None", "Jr.", "Sr.", "III", "IV", "V"];
+
+export const Provinces = ["Abra", "Benguet", ];
+
+export const Nationality = ["Filipino"];
+
+export const CivilStatus = [
+  "Single",
+  "Married",
+  "Annulled",
+  "Divorced",
+  "Widowed",
 ];
 
 export const StatusIcon = {

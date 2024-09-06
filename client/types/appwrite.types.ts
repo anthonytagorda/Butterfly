@@ -2,21 +2,21 @@ import { Models } from "node-appwrite";
 
 export interface Client extends Models.Document {
   userId: string;
-  name: string;
   email: string;
   phone: string;
   lastName: string;
   firstName: string;
   middleName: string;
+  suffixName: string;
   birthDate: Date;
   sex: Sex;
   address: string;
+  barangay: string;
+  city: string;
+  province: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
-  primaryPsychotherapist: string;
-  insuranceProvider: string;
-  insurancePolicyNumber: string;
   allergies: string | undefined;
   currentMedication: string | undefined;
   familyMedicalHistory: string | undefined;
