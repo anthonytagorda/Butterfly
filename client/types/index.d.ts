@@ -47,10 +47,11 @@ declare type CreateAppointmentParams = {
   userId: string;
   client: string;
   primaryPsychotherapist: string;
-  reason: string;
   schedule: Date;
+  consultationType: string;
+  reason: string;
+  consultationNotes: string | undefined;
   status: Status;
-  note: string | undefined;
 };
 
 declare type UpdateAppointmentParams = {
