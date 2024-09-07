@@ -72,8 +72,6 @@ export const registerClient = async ({
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
 
-    console.log({ sex: client.sex });
-
     const newClient = await databases.createDocument(
       DATABASE_ID!,
       CLIENT_COLLECTION_ID!,

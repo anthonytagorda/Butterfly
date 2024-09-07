@@ -53,7 +53,7 @@ export const IdentificationTypes = [
 
 export const SuffixTypes = ["None", "Jr.", "Sr.", "III", "IV", "V"];
 
-export const Provinces = ["Abra", "Benguet", ];
+export const Provinces = ["Abra", "Benguet"];
 
 export const Nationality = ["Filipino"];
 
@@ -64,6 +64,8 @@ export const CivilStatus = [
   "Divorced",
   "Widowed",
 ];
+
+export const ConsultationType = ["Face to Face", "Online"];
 
 export const StatusIcon = {
   scheduled: "/assets/icons/check.svg",

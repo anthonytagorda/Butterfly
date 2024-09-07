@@ -20,7 +20,6 @@ import FileUploader from "../FileUploader";
 import SubmitButton from "../SubmitButton";
 
 import {
-  Psychotherapists,
   SexOptions,
   IdentificationTypes,
   ClientFormDefaultValues,
@@ -85,7 +84,7 @@ const RegisterForm = ({ user }: { user: User }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-12 flex-1"
+        className="flex-1 space-y-12"
       >
         <section className="space-y-4">
           <h1 className="header">Fill up the form</h1>
@@ -125,7 +124,6 @@ const RegisterForm = ({ user }: { user: User }) => {
                 First Name (<i>Pangalan</i>)
               </span>
             }
-            v
             placeholder="First Name"
             className="w-full xl:w-1/2"
           />
@@ -225,7 +223,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             />
           </div>
         </div>
-
+        
         {/* Civil Status and Nationality */}
         <div className="flex gap-4 xl:flex-nowrap">
           <div className="flex-1">

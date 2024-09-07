@@ -30,12 +30,13 @@ export interface Client extends Models.Document {
 }
 
 export interface Appointment extends Models.Document {
-  client: Client;
-  schedule: Date;
-  status: Status;
-  primaryPsychotherapist: string;
-  reason: string;
-  note: string;
   userId: string;
+  client: Client;
+  primaryPsychotherapist: string;
+  schedule: Date;
+  consultationType: string;
+  reason: string;
+  consultationNotes: string;
+  status: Status;
   cancellationReason: string | null;
 }
