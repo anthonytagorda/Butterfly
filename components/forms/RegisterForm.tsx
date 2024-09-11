@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { SelectItem } from "@/components/ui/select";
@@ -88,7 +87,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       >
         <section className="space-y-4">
           <h1 className="header">Fill up the form</h1>
-          <p className="text-dark-700">
+          <p className="text-dark-600">
             Thank you for choosing A.M. Peralta Psychological Services. Filling
             in the required information is necessary for our Psychologist and
             Psychotherapist to have a well-directed clinical interview with you.

@@ -60,11 +60,16 @@ const ClientForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
-          <h1 className="header"> Hi there 🦋</h1>
-          <p className="text-dark-700">
-            This is the beginning of your self-care journey
-          </p>
+        <section className="mb-12">
+          <div>
+            <br />
+            <h1 className="header text-center">A.M. Peralta</h1>
+            <h2 className="header text-center">Psychological Services</h2>
+            <br />
+            <p className="text-dark-500 text-center">
+              This is the beginning of your self-care journey
+            </p>
+          </div>
         </section>
         <CustomFormField
           fieldType={FormFieldType.INPUT}

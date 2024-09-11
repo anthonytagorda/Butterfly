@@ -10,13 +10,14 @@ export default function Home({ searchParams }: SearchParamProps) {
       {isAdmin && <VerifyModal />}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/butterfly-logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="client"
-            className="mb-12 h-10 w-fit"
-          />
+          <div className="flex-center">
+            <Image
+              src="/assets/icons/butterfly-logo-round.svg"
+              alt="client"
+              height={200}
+              width={200}
+            />
+          </div>
 
           <ClientForm />
 
@@ -30,14 +31,6 @@ export default function Home({ searchParams }: SearchParamProps) {
           </div>
         </div>
       </section>
-
-      <Image
-        src="/assets/images/onboarding-img.png"
-        height={1000}
-        width={1000}
-        alt="client"
-        className="side-img max-w-[50%]"
-      />
     </div>
   );
 }

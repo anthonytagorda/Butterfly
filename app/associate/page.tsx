@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 
-const Admin = () => {
+const Associate = () => {
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
@@ -16,17 +16,17 @@ const Admin = () => {
           />
         </Link>
 
-        <p className="text-16-semibold">Admin Dashboard</p>
+        <p className="text-16-semibold">Associate Dashboard</p>
       </header>
 
       <main className="admin-main">
         <section className="w-full space-y-4">
           <h1 className="header">Welcome 🦋</h1>
-          <p className="text-dark-6">Start the day with appointments</p>
+          <p className="text-dark-700">Start the day with appointments</p>
         </section>
       </main>
     </div>
   );
 };
 
-export default Admin;
+export default Associate;
