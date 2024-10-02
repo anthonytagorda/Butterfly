@@ -7,59 +7,55 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Form } from "@/components/ui/form";
-import { createAppointment } from "@/lib/actions/appointment.actions";
-import { ConsultationType, Psychotherapists } from "@/constants";
 import {
-  AppointmentFormValidation,
-  getAppointmentSchema,
-} from "@/lib/validation";
+  createAppointment,
+  updateAppointment,
+} from "@/lib/actions/appointment.actions";
+import { ConsultationType, Psychotherapists } from "@/constants";
+import { Appointment } from "@/types/appwrite.types";
+import { getAppointmentSchema } from "@/lib/validation";
 
-import { CustomFormField } from "../CustomFormField";
+import { CustomFormField, FormFieldType } from "../CustomFormField";
 import { SelectItem } from "../ui/select";
 import SubmitButton from "../SubmitButton";
 import Image from "next/image";
-
-export enum FormFieldType {
-  INPUT = "input",
-  TEXTAREA = "textarea",
-  PHONE_INPUT = "phoneInput",
-  CHECKBOX = "checkbox",
-  DATE_PICKER = "datePicker",
-  SELECT = "select",
-  SKELETON = "skeleton",
-}
 
 const AppointmentForm = ({
   userId,
   clientId,
   type,
+  appointment,
+  setOpen,
 }: {
   userId: string;
   clientId: string;
   type: "create" | "cancel" | "schedule";
+  appointment?: Appointment;
+  setOpen: (open: boolean) => void;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
-  // Form handler: What the form will gather from the user?
+  // Form handler: Appointment Form
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      primaryPsychotherapist: "",
-      schedule: new Date(),
-      consultationType: "",
-      reason: "",
-      consultationNotes: "",
-      cancellationReason: "",
+      primaryPsychotherapist: appointment ? appointment?.primaryPsychotherapist : "",
+      schedule: appointment ? new Date(appointment?.schedule!) : new Date(Date.now()),
+      consultationType: appointment ? appointment?.consultationType : "",
+      reason: appointment ? appointment.reason : "",
+      consultationNotes: appointment?.consultationNotes || "",
+      cancellationReason: appointment?.cancellationReason || "",
     },
   });
 
-  // Submit handler: Do something with the form values.
+  // Appointment Submit Handler
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
     setIsLoading(true);
 
+    // Handle Appointment Status
     let status;
     switch (type) {
       case "schedule":
@@ -73,12 +69,9 @@ const AppointmentForm = ({
         break;
     }
 
-    console.log("BEFORE THE TYPE", type);
-
     try {
+      // Create an Appointment
       if (type === "create" && clientId) {
-        console.log("IM HERE");
-
         const appointmentData = {
           userId,
           client: clientId,
@@ -99,6 +92,28 @@ const AppointmentForm = ({
           router.push(
             `/clients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
+        }
+      } else {
+        // Update an Appointment
+        const appointmentToUpdate = {
+          userId,
+          appointmentId: appointment?.$id!,
+          appointment: {
+            primaryPsychotherapist: values?.primaryPsychotherapist,
+            schedule: new Date(values?.schedule),
+            reason: values.reason!,
+            consultationType: values?.consultationType,
+            cancellationReason: values?.cancellationReason,
+            status: status as Status,
+          },
+          type,
+        };
+
+        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+
+        if (updatedAppointment) {
+          setOpen && setOpen(false);
+          form.reset();
         }
       }
     } catch (error) {
@@ -126,10 +141,12 @@ const AppointmentForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
-          <h1 className="header"> New Appointment</h1>
-          <p className="text-dark-600">Schedule your appointment</p>
-        </section>
+        {type === "create" && (
+          <section className="mb-12 space-y-4">
+            <h1 className="header"> New Appointment</h1>
+            <p className="text-dark-600">Schedule your appointment</p>
+          </section>
+        )}
 
         {type !== "cancel" && (
           <>
@@ -214,7 +231,7 @@ const AppointmentForm = ({
         <SubmitButton
           isLoading={isLoading}
           className={`${
-            type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"
+            type === "cancel" ? "shad-danger-btn" : "shad-primary-alt-btn"
           } w-full rounded-full`}
         >
           {buttonLabel}

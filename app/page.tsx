@@ -25,8 +25,8 @@ export default function Home({ searchParams }: SearchParamProps) {
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 Butterfly
             </p>
-            <Link href="/?admin=true" className="text-blue-500">
-              Admin
+            <Link href="/?admin=true" className="text-blue-400">
+              Associate
             </Link>
           </div>
         </div>

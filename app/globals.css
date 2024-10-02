@@ -2,6 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background: linear-gradient(
+    45deg,
+    #2c67f2,
+    #62cff4,
+    #45a0e6,
+    #03a9f4,
+    #0689b3,
+    rgb(46, 105, 241),
+    #87ceeb
+  );
+  background-size: 400% 400%;
+  animation: gradient-x 15s ease infinite;
+}
+
+/* Fly animation */
+@keyframes fly {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(50px, -50px) rotate(10deg);
+  }
+  40% {
+    transform: translate(100px, -100px) rotate(15deg);
+  }
+  50% {
+    transform: translate(200px, -200px) rotate(20deg);
+  }
+  60% {
+    transform: translate(150px, -150px) rotate(15deg);
+  }
+  80% {
+    transform: translate(50px, -50px) rotate(10deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* Bubble animation */
+@keyframes bubble-float {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+}
+
+.bubble-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  opacity: 0.7;
+}
+
+.bubble-1 {
+  left: 20%;
+  animation: bubble-float 6s ease-in infinite;
+}
+
+.bubble-2 {
+  left: 50%;
+  animation: bubble-float 8s ease-in infinite;
+}
+
+.bubble-3 {
+  left: 80%;
+  animation: bubble-float 7s ease-in infinite;
+}
+
 /* ========================================== TAILWIND STYLES */
 @layer base {
   /* Remove scrollbar */
@@ -94,6 +191,32 @@
     @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
   }
 
+  /* ===== CLIENT */
+  .client-header {
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-light-200 px-[5%] py-5 shadow-lg xl:px-12;
+  }
+
+  .client-main {
+    @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
+  }
+
+  .client-stat {
+    @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
+  }
+
+  /* ===== ASSOCIATE */
+  .assoc-header {
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-light-200 px-[5%] py-5 shadow-lg xl:px-12;
+  }
+
+  .assoc-main {
+    @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
+  }
+
+  .assoc-stat {
+    @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
+  }
+
   /* ==== FORM */
   .radio-group {
     @apply flex h-full flex-1 items-center gap-2 rounded-md border border-dashed border-dark-700 bg-light-200 p-3;
@@ -183,7 +306,11 @@
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-blue-500 text-white !important;
+    @apply bg-light-200 text-blue-400 rounded-full !important;
+  }
+
+  .shad-primary-alt-btn {
+    @apply bg-blue-400 text-light-200 rounded-full !important;
   }
 
   .shad-danger-btn {
@@ -243,11 +370,11 @@
   }
 
   .shad-table-row-header {
-    @apply border-b border-dark-400 text-light-200 hover:bg-transparent !important;
+    @apply border-b border-light-200 text-light-200 hover:bg-transparent !important;
   }
 
   .shad-table-row {
-    @apply border-b border-dark-400 text-light-200 !important;
+    @apply border-b border-light-200 text-dark-500 !important;
   }
 
   .shad-otp {
@@ -268,7 +395,7 @@
 
   /* =====  REACT PHONE NUMBER INPUT OVERRIDES */
   .input-phone {
-    @apply mt-2 h-11 rounded-md px-3 text-sm border bg-light-200 placeholder:text-dark-600 border-dark-700 !important;
+    @apply mt-2 h-11 rounded-xl px-3 text-sm border bg-light-200 placeholder:text-dark-600 border-dark-700 !important;
   }
 
   /* =====  REACT DATE PICKER OVERRIDES */
@@ -290,21 +417,21 @@
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker-time__header {
-  background-color: #E8E9E9 !important;
-  border-color: #ABB8C4 !important;
-  color: #363A3D !important;
+  background-color: #e8e9e9 !important;
+  border-color: #abb8c4 !important;
+  color: #363a3d !important;
 }
 
 .react-datepicker__current-month,
 .react-datepicker__day-name,
 .react-datepicker-time__header {
-  color: #363A3D !important;
+  color: #363a3d !important;
 }
 
 .react-datepicker__triangle {
-  fill: #E8E9E9 !important;
-  color: #E8E9E9 !important;
-  stroke: #E8E9E9 !important;
+  fill: #e8e9e9 !important;
+  color: #e8e9e9 !important;
+  stroke: #e8e9e9 !important;
 }
 
 .react-datepicker__time-list-item:hover {
@@ -312,7 +439,7 @@
 }
 
 .react-datepicker__input-container input {
-  background-color: #E8E9E9 !important;
+  background-color: #e8e9e9 !important;
   width: 100%;
   outline: none;
 }
@@ -328,7 +455,7 @@
 }
 
 .react-datepicker__time-container {
-  border-left: 1px solid #ABB8C4 !important;
+  border-left: 1px solid #abb8c4 !important;
 }
 
 .react-datepicker__time-list-item {
@@ -340,11 +467,11 @@
 .PhoneInputInput {
   outline: none;
   margin-left: 4px;
-  background: #E8E9E9;
+  background: #e8e9e9;
   font-size: 14px;
   font-weight: 500;
 }
 
 .PhoneInputInput::placeholder {
-  color: #E8E9E9;
+  color: #e8e9e9;
 }

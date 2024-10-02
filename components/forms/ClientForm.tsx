@@ -10,24 +10,15 @@ import { Form } from "@/components/ui/form";
 import { createUser } from "@/lib/actions/client.actions";
 import { UserFormValidation } from "@/lib/validation";
 
-import { CustomFormField } from "../CustomFormField";
+import "react-phone-number-input/style.css";
+import { CustomFormField, FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-
-export enum FormFieldType {
-  INPUT = "input",
-  TEXTAREA = "textarea",
-  PHONE_INPUT = "phoneInput",
-  CHECKBOX = "checkbox",
-  DATE_PICKER = "datePicker",
-  SELECT = "select",
-  SKELETON = "skeleton",
-}
 
 const ClientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Form handler: What the form will gather from the user?
+  // Client Form Values
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -37,25 +28,28 @@ const ClientForm = () => {
     },
   });
 
-  // Submit handler: Do something with the form values.
-  async function onSubmit({
-    firstName,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
-    // ✅ This will be type-safe and validated.
+  // Submit Handler: Proceed to Pre-Assessment
+  const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
     setIsLoading(true);
 
     try {
-      const userData = { firstName, email, phone };
+      const user = {
+        name: values.firstName,
+        email: values.email,
+        phone: values.phone,
+      };
 
-      const user = await createUser(userData);
+      const newUser = await createUser(user);
 
-      if (user) router.push(`/clients/${user.$id}/register`);
+      if (newUser) {
+        router.push(`/clients/${newUser.$id}/register`);
+      }
     } catch (error) {
       console.log(error);
     }
-  }
+
+    setIsLoading(false);
+  };
 
   return (
     <Form {...form}>
@@ -97,7 +91,12 @@ const ClientForm = () => {
           name="phone"
           label="Phone Number"
         />
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <SubmitButton
+          isLoading={isLoading}
+          className="shad-primary-alt-btn w-full"
+        >
+          Get Started
+        </SubmitButton>
       </form>
     </Form>
   );

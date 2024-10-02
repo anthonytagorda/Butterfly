@@ -41,7 +41,7 @@ const VerifyModal = () => {
     if (path) {
       if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
         setOpen(false);
-        router.push("/admin");
+        router.push("/associate");
       } else {
         setOpen(true);
       }
@@ -72,7 +72,7 @@ const VerifyModal = () => {
       <AlertDialogContent className="shad-alert-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
-            Admin Access Verification
+            Associate Access Verification
             <Image
               src="/assets/icons/close.svg"
               alt="close"
@@ -83,7 +83,7 @@ const VerifyModal = () => {
             />
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To access the admin page, please enter the passkey.
+            To access the associate page, please enter the passkey.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
@@ -112,7 +112,7 @@ const VerifyModal = () => {
             onClick={(e) => validatePasskey(e)}
             className="shad-primary-btn w-full rounded-full"
           >
-            Enter Admin Passkey
+            Enter Associate Passkey
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

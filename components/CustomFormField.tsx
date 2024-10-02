@@ -2,7 +2,6 @@
 
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Control, Form } from "react-hook-form";
-import { FormFieldType } from "./forms/ClientForm";
 import Image from "next/image";
 import PhoneInput from "react-phone-number-input";
 import { E164Number } from "libphonenumber-js/core";
@@ -21,6 +19,17 @@ import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { ReactNode } from "react";
+
+export enum FormFieldType {
+  INPUT = "input",
+  PASSWORD = "password",
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "phoneInput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton",
+}
 
 interface CustomProps {
   control: Control<any>;
@@ -51,12 +60,12 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border border-dark-700 bg-light-200">
+        <div className="flex rounded-xl border border-dark-700 bg-light-200">
           {iconSrc && (
             <Image
               src={iconSrc}
-              height={24}
-              width={24}
+              height={16}
+              width={16}
               alt={iconAlt || "icon"}
               className="ml-2"
             />
@@ -65,7 +74,29 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
-              className="shad-input border-0"
+              className="shad-input border-0 rounded-xl"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.PASSWORD:
+      return (
+        <div className="flex shad-input rounded-xl border-0 border-dark-700 bg-light-200">
+          {iconSrc && (
+            <Image
+              src={iconSrc}
+              height={16}
+              width={16}
+              alt={iconAlt || "icon"}
+              className="ml-2"
+            />
+          )}
+          <FormControl>
+            <Input
+              placeholder={placeholder}
+              type="password"
+              {...field}
+              className="shad-input border-0 rounded-xl"
             />
           </FormControl>
         </div>
@@ -111,9 +142,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select 
-            onValueChange={field.onChange} 
-            defaultValue={field.value}>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={props.placeholder} />
@@ -145,8 +174,8 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               checked={field.value}
               onCheckedChange={field.onChange}
             />
-            <label 
-              htmlFor={props.name} 
+            <label
+              htmlFor={props.name}
               className="checkbox-label flex-1 text-justify"
             >
               {props.label}

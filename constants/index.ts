@@ -1,31 +1,28 @@
 export const SexOptions = ["Male", "Female"];
 
-export const ClientFormDefaultValues = {
-  firstName: "",
+export const RegisterFormDefaultValues = {
   lastName: "",
+  firstName: "",
   middleName: "",
-  suffixName: "",
+  suffixName: "None",
+  birthDate: new Date(Date.now() - 315360000000),
+  sex: "Male" as Sex,
+  nationality: "Filipino",
+  civilStatus: "Single",
   email: "",
   phone: "",
-  birthDate: new Date(Date.now()),
-  sex: "Male" as Sex,
-  nationality: "",
-  civilStatus: "",
-  address: "",
-  barangay: "",
-  city: "",
-  province: "",
   occupation: "",
+  address: "",
   emergencyContactName: "",
   emergencyContactNumber: "",
-  allergies: "",
+  therapyReason: "",
   currentMedication: "",
   familyMedicalHistory: "",
   pastMedicalHistory: "",
   identificationType: "Birth Certificate",
   identificationNumber: "",
   identificationDocument: [],
-  treatmentConsent: false,
+  therapyConsent: false,
   disclosureConsent: false,
   privacyConsent: false,
 };
@@ -53,11 +50,9 @@ export const IdentificationTypes = [
 
 export const SuffixTypes = ["None", "Jr.", "Sr.", "III", "IV", "V"];
 
-export const Provinces = ["Abra", "Benguet"];
-
 export const Nationality = ["Filipino"];
 
-export const CivilStatus = [
+export const CivilStatusOptions = [
   "Single",
   "Married",
   "Annulled",
